@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build: .
+    container_name: telegram-bot-notification
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Telegram API credentials
+      - TELEGRAM_API_ID=${TELEGRAM_API_ID}
+      - TELEGRAM_API_HASH=${TELEGRAM_API_HASH}
+      - TELEGRAM_PHONE=${TELEGRAM_PHONE}
+    volumes:
+      # Mount session file to persist login
+      - ./data:/app/data
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

@@ -1,0 +1,15 @@
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/.idea
+**/bin
+**/obj
+**/node_modules
+**/npm-debug.log
+**/*.user
+**/*.suo
+**/*.cache
+**/data
+**/.DS_Store
+**/WTelegram.session

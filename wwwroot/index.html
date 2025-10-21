@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Bot Notification</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📱 Telegram Bot Notification</h1>
+            <p class="subtitle">Отправка сообщений через Telegram</p>
+        </header>
+
+        <div class="init-section">
+            <button id="initBtn" class="btn btn-primary">🔐 Войти в Telegram</button>
+            <div id="initStatus" class="status"></div>
+            
+            <!-- Verification code input -->
+            <div id="codeInputSection" style="display: none; margin-top: 20px;">
+                <div class="form-group">
+                    <label for="verificationCode">Введите код из Telegram:</label>
+                    <input type="text" id="verificationCode" placeholder="12345" style="max-width: 200px; margin: 10px auto; display: block;">
+                    <button id="submitCodeBtn" class="btn btn-success">✅ Подтвердить</button>
+                </div>
+            </div>
+            
+            <!-- Password input for 2FA -->
+            <div id="passwordInputSection" style="display: none; margin-top: 20px;">
+                <div class="form-group">
+                    <label for="cloudPassword">Введите пароль облачного хранилища (2FA):</label>
+                    <input type="password" id="cloudPassword" placeholder="Пароль" style="max-width: 200px; margin: 10px auto; display: block;">
+                    <button id="submitPasswordBtn" class="btn btn-success">🔐 Отправить</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="send">Отправить сообщение</button>
+            <button class="tab-btn" data-tab="multiple">Несколько сообщений</button>
+            <button class="tab-btn" data-tab="scheduled">Запланировать</button>
+            <button class="tab-btn" data-tab="scheduled-multiple">Запланировать несколько</button>
+        </div>
+
+        <!-- Tab 1: Send Message -->
+        <div class="tab-content active" id="send">
+            <h2>Отправить сообщение</h2>
+            <form id="sendForm">
+                <div class="form-group">
+                    <label for="username1">Имя пользователя (без @):</label>
+                    <input type="text" id="username1" placeholder="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="message1">Текст сообщения:</label>
+                    <textarea id="message1" rows="4" placeholder="Введите текст..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">📤 Отправить</button>
+            </form>
+            <div class="result" id="result1"></div>
+        </div>
+
+        <!-- Tab 2: Multiple Messages -->
+        <div class="tab-content" id="multiple">
+            <h2>Отправить несколько сообщений</h2>
+            <form id="multipleForm">
+                <div class="form-group">
+                    <label for="username2">Имя пользователя (без @):</label>
+                    <input type="text" id="username2" placeholder="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="message2">Текст сообщения:</label>
+                    <textarea id="message2" rows="4" placeholder="Введите текст..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="count2">Количество сообщений:</label>
+                    <input type="number" id="count2" min="1" value="1" required>
+                </div>
+                <button type="submit" class="btn btn-success">📤 Отправить</button>
+            </form>
+            <div class="result" id="result2"></div>
+        </div>
+
+        <!-- Tab 3: Scheduled Message -->
+        <div class="tab-content" id="scheduled">
+            <h2>Запланировать сообщение</h2>
+            <form id="scheduledForm">
+                <div class="form-group">
+                    <label for="username3">Имя пользователя (без @):</label>
+                    <input type="text" id="username3" placeholder="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="message3">Текст сообщения:</label>
+                    <textarea id="message3" rows="4" placeholder="Введите текст..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="minutes3">Через сколько минут отправить:</label>
+                    <input type="number" id="minutes3" min="1" value="5" required>
+                </div>
+                <button type="submit" class="btn btn-success">⏰ Запланировать</button>
+            </form>
+            <div class="result" id="result3"></div>
+        </div>
+
+        <!-- Tab 4: Multiple Scheduled Messages -->
+        <div class="tab-content" id="scheduled-multiple">
+            <h2>Запланировать несколько сообщений</h2>
+            <form id="scheduledMultipleForm">
+                <div class="form-group">
+                    <label for="username4">Имя пользователя (без @):</label>
+                    <input type="text" id="username4" placeholder="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="message4">Текст сообщения:</label>
+                    <textarea id="message4" rows="4" placeholder="Введите текст..." required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="count4">Количество сообщений:</label>
+                        <input type="number" id="count4" min="1" value="3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interval4">Интервал (минуты):</label>
+                        <input type="number" id="interval4" min="1" value="60" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="delayHours4">Задержка (часы):</label>
+                        <input type="number" id="delayHours4" min="0" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delayMinutes4">Задержка (минуты):</label>
+                        <input type="number" id="delayMinutes4" min="0" value="5" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">⏰ Запланировать</button>
+            </form>
+            <div class="result" id="result4"></div>
+        </div>
+
+        <footer>
+            <p>© 2025 Telegram Bot Notification | Powered by WTelegram</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
